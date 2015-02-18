@@ -1,2 +1,0 @@
-# GamesAssignment
-Space Battle Repo
