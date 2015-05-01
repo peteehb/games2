@@ -1,71 +1,77 @@
-﻿using BGE;
+﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityEngine;
 
-public class Path
+
+namespace BGE
 {
-    public List<Vector3> waypoints = new List<Vector3>();
-
-    public bool Looped;
-    int next; 
-
-    public Path()
+    public class Path
     {
-        Looped = false;
-        next = 0;
-    }
+        private List<Vector3> waypoints = new List<Vector3>();
+        private int next = 0;
+        public bool draw;
 
-    public Vector3 NextWaypoint()
-    {
-        if (next < waypoints.Count)
+        public int Next
         {
-            return waypoints[next];
+            get { return next; }
+            set { next = value; }
         }
-        else
-        {
-            return Vector3.zero;
-        }
-    }
 
-    public void AddWaypoint(Vector3 waypoint)
-    {
-        waypoints.Add(waypoint);
-    }
+        public List<Vector3> Waypoints
+        {
+            get { return waypoints; }
+            set { waypoints = value; }
+        }
 
-    public void Draw()
-    {
-        for (int i = 1 ; i < waypoints.Count ; i ++)
-        {
-            LineDrawer.DrawLine(waypoints[i - 1], waypoints[i], Color.cyan);
-        }
-        if (Looped)
-        {
-            LineDrawer.DrawLine(waypoints[waypoints.Count - 1], waypoints[0], Color.cyan);
-        }
-    }
+        private bool looped;
 
-    public Vector3 Advance()
-    {
-        if (Looped)
+
+        public bool Looped
         {
-            next = (next + 1) % waypoints.Count;
+            get { return looped; }
+            set { looped = value; }
         }
-        else
+
+        public void Draw()
         {
-            if (next < (waypoints.Count - 1))
+            if (draw)
             {
-                next++;
+                for (int i = 1; i < waypoints.Count(); i++)
+                {
+                    LineDrawer.DrawLine(waypoints[i - 1], waypoints[i], Color.cyan);
+                }
+                if (looped && (waypoints.Count() > 0))
+                {
+                    LineDrawer.DrawLine(waypoints[0], waypoints[waypoints.Count() - 1], Color.cyan);
+                }
             }
         }
 
-        return NextWaypoint();
-    }
+        public Vector3 NextWaypoint()
+        {
+            return waypoints[next];
+        }
 
-    public bool IsLast()
-    {
-        return ((! Looped) && (next == waypoints.Count - 1));
+        public bool IsLast()
+        {
+            return (next == waypoints.Count() - 1);
+        }
+
+        public void AdvanceToNext()
+        {
+            if (looped)
+            {
+                next = (next + 1) % waypoints.Count();
+            }
+            else
+            {
+                if (next != waypoints.Count() - 1)
+                {
+                    next = next + 1;
+                }
+            }
+        }
     }
 }
