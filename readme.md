@@ -12,29 +12,6 @@
 
 ..First Camera
 
-3. Enemy detected on radar.. Have some dialogue here.
+##
 
-4. Call for reinforcements
-
-
-..Enemy Camera
-
-5. Enemy closing in. Adjust formations.
-
-
-.. Another Camera
-
-6. Reinforements arrive.
-
-
-..multiple cameras following ships
-
-7. 
-Battle commences. 
-Various steering behaviours here.. ships in attack mode
-
-8. 
-Finish battle wrap up scene with dialogue.
-
-
-
+Scene is called newGame.unity found in scenes directory
